@@ -84,6 +84,25 @@ var modeler = new BpmnModeler({
 var latestXML, diagramName;
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
+// Http request
+
+/*var http = require("http");
+
+var options = {
+    hostname: "http://test.requestcatcher.com/",
+    method: "POST",
+    headers: {
+        "Content-Type": "application/xml"
+    }
+};
+
+var req = http.request(options, function(res) {
+    Console.log("Status: " + res.statusCode);
+    res.setEncoding("utf8");
+});*/
+
+// end hhtp
+
 function createNewDiagram() {
     openDiagram(newDiagramXML);
 }
@@ -145,7 +164,6 @@ function saveSVG(done) {
 }
 
 function saveDiagram(done) {
-
     modeler.saveXML({format: true}, function (err, xml) {
         done(err, xml);
     });
@@ -228,6 +246,20 @@ $(document).ready(function () {
     });
 
     downloadLink.click(function (e) {
+        alert("download link clicked");
+
+        var http = new XMLHttpRequest();
+        var url = "http://localhost:8080/belegarbeit/api/bpmn";
+        http.open("POST", url);
+
+        http.setRequestHeader("Access-Control-Allow-Origin", "*");
+        http.setRequestHeader("Content-Type", "text/xml");
+        // http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        http.send(latestXML);
+
+        alert(http.statusCode);
+
         if (isWebserver()) {
             if (typeof diagramName === "undefined" || diagramName === "") {
                 swal({

@@ -1,3 +1,7 @@
+# Anmerkungen
+
+Dieses Projekt baut auf der Arbeit von FÜSSLIN (2017) auf und wird um die Funktionalität einer REST-Schnittstelle erweitert, die es ermöglichen soll, erstellte Diagramme zu persistieren.
+
 # bpmn-js-clinical-pathways
 Dieses Projekt ist ein Modellierungseditor zur Abbildung von Konzepten Klinischer Pfade, die in die abstrakte Syntax des Metamodells der BPMN 2.0 integriert wurden.
 Dieser Prototyp entstand während der Masterarbeit mit dem Titel `Konzeption & Implementierung eines webbasierten Modellierungseditors zur Abbildung Klinischer Pfad` von [`FÜSSLIN (2017)`](#literatur).
