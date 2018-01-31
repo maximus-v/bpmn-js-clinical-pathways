@@ -1,0 +1,47 @@
+.controls {
+    border: 1px solid black;
+    width: 20%;
+    margin: auto;
+    padding: 5px;
+    text-align: center;
+    background: #002557;
+    z-index: 1000;
+    position: relative;
+}
+
+.controls p {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.controls ul {
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    width: 80%;
+}
+
+.controls li {
+    float: left;
+    border-right: 1px solid #bbb;
+}
+
+.controls li:last-child {
+    border-right: none;
+}
+
+.controls li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.controls li a:hover {
+    background-color: white;
+    color: #002557;
+}

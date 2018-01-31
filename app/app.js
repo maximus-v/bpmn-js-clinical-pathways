@@ -84,25 +84,6 @@ var modeler = new BpmnModeler({
 var latestXML, diagramName;
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
-// Http request
-
-/*var http = require("http");
-
-var options = {
-    hostname: "http://test.requestcatcher.com/",
-    method: "POST",
-    headers: {
-        "Content-Type": "application/xml"
-    }
-};
-
-var req = http.request(options, function(res) {
-    Console.log("Status: " + res.statusCode);
-    res.setEncoding("utf8");
-});*/
-
-// end hhtp
-
 function createNewDiagram() {
     openDiagram(newDiagramXML);
 }
@@ -220,7 +201,9 @@ if (!window.FileList || !window.FileReader) {
 
 $(document).ready(function () {
 
-    $('#js-create-diagram').click(function (e) {
+    createNewDiagram()
+
+    /*$('#js-create-diagram').click(function (e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -233,7 +216,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         elFinderHelper.open();
-    });
+    });*/
 
     var downloadLink = $('#js-download-diagram');
     var downloadSvgLink = $('#js-download-svg');
@@ -245,20 +228,65 @@ $(document).ready(function () {
         }
     });
 
-    downloadLink.click(function (e) {
-        alert("download link clicked");
+    var postDiagram = $('#js-req-post');
 
-        var http = new XMLHttpRequest();
+    $('.controls a').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    postDiagram.click(function (e) {
         var url = "http://localhost:8080/belegarbeit/api/bpmn";
-        http.open("POST", url);
 
-        http.setRequestHeader("Access-Control-Allow-Origin", "*");
-        http.setRequestHeader("Content-Type", "text/xml");
-        // http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        var xhr = new XMLHttpRequest();
 
-        http.send(latestXML);
+        xhr.addEventListener("progress", updateProgress);
+        xhr.addEventListener("load", transferComplete);
+        xhr.addEventListener("error", transferFailed);
+        xhr.addEventListener("abort", transferCanceled);
 
-        alert(http.statusCode);
+        xhr.open("POST", url, true);
+
+        if (!xhr) {
+            alert("CORS not supported");
+        }
+
+        xhr.onreadystatechange = function() {
+        };
+
+        xhr.onload = function() {
+        };
+
+        xhr.onerror = function() {
+            alert("error connecting to server");
+        };
+
+        xhr.send(latestXML);
+    });
+
+
+
+    downloadLink.click(function (e) {
+
+        var url = "http://localhost:8080/belegarbeit/api/bpmn";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+
+        if (!xhr) {
+            alert("CORS not supported");
+        }
+
+        xhr.onreadystatechange = function() {
+        };
+
+        xhr.onload = function() {
+        };
+
+        xhr.onerror = function() {
+        };
+
+        xhr.send(latestXML);
 
         if (isWebserver()) {
             if (typeof diagramName === "undefined" || diagramName === "") {
@@ -358,4 +386,26 @@ function saveDiagramToDisk(fileName, latestXML) {
 
 function isWebserver() {
     return window.location.href.indexOf("localhost:9013") === -1;
+}
+
+function updateProgress (oEvent) {
+    alert("Progress");
+    /*if (oEvent.lengthComputable) {
+        var percentComplete = oEvent.loaded / oEvent.total;
+        // ...
+    } else {
+        // Unable to compute progress information since the total size is unknown
+    }*/
+}
+
+function transferComplete(evt) {
+    alert("The transfer is complete.");
+}
+
+function transferFailed(evt) {
+    alert("An error occurred while transferring the file.");
+}
+
+function transferCanceled(evt) {
+    alert("The transfer has been canceled by the user.");
 }

@@ -10,9 +10,25 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="css/dmn-js.css" />
   <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/rest.css" />
 </head>
 <body>
 <div class="content" id="js-drop-zone">
+  <div class="controls">
+    <p>Controls</p>
+    <ul>
+      <li>
+        <a id="js-req-post" href="#">POST</a>
+      </li>
+      <li>
+        <a id="js-req-get" href="#">GET</a>
+      </li>
+      <li>
+        <a id="js-req-options" href="#">OPTIONS</a>
+      </li>
+    </ul>
+  </div>
+
   <div class="message intro">
     <div class="note">
       Drop BPMN diagram from your desktop, <a id="js-create-diagram" href>create a new diagram</a> or <a href id="js-open-diagram">open</a> to get started.
@@ -49,6 +65,8 @@
     </a>
   </li>
 </ul>
+
+</body>
 
   <script src="app.js"></script>
 </html>
