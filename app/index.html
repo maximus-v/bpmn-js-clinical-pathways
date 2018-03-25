@@ -14,20 +14,28 @@
 </head>
 <body>
 <div class="content" id="js-drop-zone">
-  <div class="controls">
-    <p>Controls</p>
-    <ul>
-      <li>
-        <a id="js-req-post" href="#">POST</a>
-      </li>
-      <li>
-        <a id="js-req-get" href="#">GET</a>
-      </li>
-      <li>
-        <a id="js-req-options" href="#">OPTIONS</a>
-      </li>
-    </ul>
-  </div>
+    <!-- Controls for REST -->
+    <div class="controls">
+        <p>Controls</p>
+        <ul>
+            <li>
+                <a id="js-req-post" href="#">POST</a>
+            </li>
+            <li>
+                <a id="js-req-get" href="#">GET</a>
+            </li>
+            <li>
+                <a id="js-req-options" href="#">OPTIONS</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="path-list-container">
+        <h1>Available Paths</h1>
+        <ul id="path-list">
+
+        </ul>
+    </div>
 
   <div class="message intro">
     <div class="note">
