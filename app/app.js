@@ -258,7 +258,7 @@ $(document).ready(function () {
         var url = "http://localhost:8080/belegarbeit/api/bpmn";
 
         var xhr = new XMLHttpRequest();
-        xhr.overrideMimeType("application/xml");
+        xhr.overrideMimeType("application/json");
 
         xhr.addEventListener("progress", updateProgress);
         xhr.addEventListener("load", transferComplete);
