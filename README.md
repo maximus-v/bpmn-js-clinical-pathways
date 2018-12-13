@@ -36,7 +36,6 @@ Dabei wurde die JavaScript-Library **bpmn-js** als Ausgangsbasis herangezogen un
 Das Testsystem bestand aus folgenden Komponenten und wurde unter Windows 10 aufgesetzt:
 * [Apache 2.4.23 (x64)](https://httpd.apache.org/)
     * inkl. mod_rewrite
-* [PHP 7.1.0 (ZTS MSVC14 (Visual C++ 2015) x64)](http://php.net/)
 * [NodeJS 7.2.0 & NPM 4.0.5](https://nodejs.org/)
     * grunt `npm install --global grunt`
 
@@ -44,20 +43,7 @@ Die Anwendung wurde mit Mozilla Firefox und Google Chrome getestet.
 
 **!Wichtig!**
 
-Die Pfade der Programme `node`, `npm` und `php` müssen in der Windows PATH-Variable vorhanden sein, um Befehle über die Kommandozeile ausführen zu können.
-Zum Beispiel:
-
-Benutzervariable [PATH] für ###USERNAME###:
-`C:\Users\###USERNAME###\scoop\apps\nodejs\7.2.0\nodejs`
- <br>
- Systemvariable [PATH]:
-`C:\Users\###USERNAME###\scoop\apps\php\current`
-
-(PHP unter Systemvariablen anlegen, da der WebServer meistens unter einem anderen User ausgeführt wird und daher die Systemvariablen des Nutzers ###USERNAME### keine Gültigkeit besitzen.) Die korrekte funktionsweise kann in der Kommandozeile z. B. via `node -v`, `npm -v` bzw. `php -v`überprüft werden. 
-
-**Konfiguration des WebServers**
-
-Der Webserver muss so konfiguriert werden, dass der Document-Root auf das Verzeichnis `php/public` zeigt. 
+Die Pfade der Programme `node` und `npm` müssen in der Windows PATH-Variable vorhanden sein, um Befehle über die Kommandozeile ausführen zu können.
 
 ## Struktur
 ### app
@@ -78,12 +64,6 @@ Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgef
  ```
  npm install
  ```
- 
- ### Abhängigkeiten des PHP-Moduls installieren (einmalig ausführen)
- **HINWEIS**: PHP muss dazu in der PATH-Variable sein und über die Kommandozeile z. B. per `php -v` erreichbar sein.
-  ```
-  npm run php-dependencies
-  ```
   
 ### Ausführen des Projektes (ohne PHP Funktionalitäten)
  Der Befehl
@@ -92,13 +72,6 @@ Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgef
  ```
  kopiert alle notwendigen Dateien in den **"dist"** Ordner, führt den integrierten WebServer **Karma** aus und lädt das Projekt im Browser
  unter [http://localhost:9013](http://localhost:9013).
- 
- ### Produktiv-Version erzeugen (inkl. PHP Funktionalitäten)
- Der Befehl
- ```
- grunt php-release
- ```
- kopiert alle notwendigen Dateien in den Ordner **php/public/cp-modeler** und stellt diese für die Verwendung innerhalb des integrierten Zend Framework 3 bereit.
  
 ## Literatur
 [BRAUN ET AL. 2014] BRAUN, Richard ; SCHLIETER, Hannes ; BURWITZ, Martin ; ESSWEIN,
