@@ -255,7 +255,7 @@ $(document).ready(function () {
         // delete previous diagrams
         $('#path-list').empty();
 
-        var url = "http://localhost:8080/belegarbeit/api/bpmn";
+        var url = "http://localhost:8080/bpmn4cp/api/templates";
 
         var xhr = new XMLHttpRequest();
         xhr.overrideMimeType("application/json");
@@ -295,7 +295,7 @@ $(document).ready(function () {
     // GET specific diagram
     $('#path-list').on("click", "li", function() {
         var id = $(this).find(".id").text();
-        var url = "http://localhost:8080/belegarbeit/api/bpmn/" + id;
+        var url = "http://localhost:8080/bpmn4cp/api/templates/" + id + "/bpmnxml";
 
         var xhr = new XMLHttpRequest();
         xhr.overrideMimeType("application/xml");
@@ -314,6 +314,9 @@ $(document).ready(function () {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 $('.path-list-container').hide();
+
+                console.log(xhr.responseText);
+
                 openDiagram(xhr.responseText);
             }
         };
@@ -401,7 +404,7 @@ function updateProgress (oEvent) {
 }
 
 function transferComplete(evt) {
-    alert("Transfer complete");
+
 }
 
 function transferFailed(evt) {
