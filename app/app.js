@@ -201,7 +201,9 @@ if (!window.FileList || !window.FileReader) {
 
 $(document).ready(function () {
 
-    createNewDiagram()
+    $(".djs-container").first().addClass("two-column");
+
+    createNewDiagram();
 
     var downloadLink = $('#js-download-diagram');
     var downloadSvgLink = $('#js-download-svg');
@@ -210,6 +212,9 @@ $(document).ready(function () {
 
     var postDiagram = $('#js-req-post');
     var getAllDiagrams = $('#js-req-get');
+    var putDiagram = $('#js-req-put');
+
+    var selectedID = 0;
 
     $('.controls a').click(function (e) {
         e.preventDefault();
@@ -218,7 +223,12 @@ $(document).ready(function () {
 
     // POST diagram
     postDiagram.click(function (e) {
-        var url = "http://localhost:8080/belegarbeit/api/bpmn";
+        if (selectedID !== 0) {
+            alert("Diagramm wurde bereits erstellt. Nutzen Sie die Update-Funktion");
+            return;
+        }
+
+        var url = "http://localhost:8080/bpmn4cp/api/templates";
 
         var xhr = new XMLHttpRequest();
 
@@ -229,9 +239,49 @@ $(document).ready(function () {
 
         xhr.open("POST", url, true);
 
-        if (!xhr) {
-            alert("CORS not supported");
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        xhr.onreadystatechange = function() {
+        };
+
+        xhr.onload = function() {
+            var jsonResponse = JSON.parse(xhr.responseText);
+
+            selectedID = jsonResponse["id"];
+        };
+
+        xhr.onerror = function() {
+        };
+
+        var req_obj = new Object();
+        req_obj.name = "Some Random Template name";
+        req_obj.pathXML = latestXML;
+        var jsonString= JSON.stringify(req_obj);
+
+        console.log(jsonString);
+
+        xhr.send(jsonString);
+    });
+
+    //PUT diagram
+    putDiagram.click(function(e) {
+        if (selectedID === 0) {
+            alert("Diagramm wurde noch nicht erstellt");
+            return;
         }
+
+        var url = "http://localhost:8080/bpmn4cp/api/templates/" + selectedID;
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("progress", updateProgress);
+        xhr.addEventListener("load", transferComplete);
+        xhr.addEventListener("error", transferFailed);
+        xhr.addEventListener("abort", transferCanceled);
+
+        xhr.open("PUT", url, true);
+
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
         xhr.onreadystatechange = function() {
         };
@@ -242,7 +292,14 @@ $(document).ready(function () {
         xhr.onerror = function() {
         };
 
-        xhr.send(latestXML);
+        var req_obj = new Object();
+        req_obj.name = "Some Random Template name";
+        req_obj.pathXML = latestXML;
+        var jsonString= JSON.stringify(req_obj);
+
+        console.log(jsonString);
+
+        xhr.send(jsonString);
     });
 
     // GET all diagrams
@@ -261,10 +318,6 @@ $(document).ready(function () {
         xhr.addEventListener("abort", transferCanceled);
 
         xhr.open("GET", url, true);
-
-        if (!xhr) {
-            alert("CORS not supported");
-        }
 
         xhr.onreadystatechange = function() {
         };
@@ -289,8 +342,8 @@ $(document).ready(function () {
 
     // GET specific diagram
     $('#path-list').on("click", "li", function() {
-        var id = $(this).find(".id").text();
-        var url = "http://localhost:8080/bpmn4cp/api/templates/" + id + "/bpmnxml";
+        selectedID = $(this).find(".id").text();
+        var url = "http://localhost:8080/bpmn4cp/api/templates/" + selectedID + "/bpmnxml";
 
         var xhr = new XMLHttpRequest();
         xhr.overrideMimeType("application/xml");
@@ -302,15 +355,9 @@ $(document).ready(function () {
 
         xhr.open("GET", url, true);
 
-        if (!xhr) {
-            alert("CORS not supported");
-        }
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 $('.path-list-container').hide();
-
-                console.log(xhr.responseText);
 
                 openDiagram(xhr.responseText);
             }
@@ -399,7 +446,7 @@ function updateProgress (oEvent) {
 }
 
 function transferComplete(evt) {
-
+    alert("Transfer complete");
 }
 
 function transferFailed(evt) {
