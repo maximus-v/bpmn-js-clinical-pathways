@@ -1,10 +1,5 @@
 'use strict';
 
-// @TODO 1 progress bar erstellen
-// @TODO 2 eye candy
-// @TODO 3 GET
-// @TODO 4 clean up code
-
 var fs = require('fs');
 
 var $ = require('jquery'),
